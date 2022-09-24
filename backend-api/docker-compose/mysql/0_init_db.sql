@@ -58,7 +58,9 @@ CREATE TABLE `customer` (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `birthdate` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_CUSTOMER_CPF` (`cpf`),
+  UNIQUE KEY `IDX_CUSTOMER_EMAIL` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,7 +74,7 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `id` int NOT NULL AUTO_INCREMENT,
   `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `number` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `district` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `zip` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `complement` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -96,7 +98,7 @@ DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` float NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -109,10 +111,10 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `total_value` int NOT NULL,
+  `total_value` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_ORDER_CUSTOMER` (`customer_id`),
   CONSTRAINT `FK_ORDER_CUSTOMER` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
@@ -130,8 +132,8 @@ CREATE TABLE `order_product` (
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `amount` int NOT NULL,
-  `unit_value` int NOT NULL,
-  `total_value` int NOT NULL,
+  `unit_value` decimal(10,2) NOT NULL,
+  `total_value` decimal(10,2) NOT NULL,
   PRIMARY KEY (`order_id`, `product_id`),
   KEY `IDX_ORDER` (`order_id`),
   KEY `IDX_PRODUCT` (`product_id`),
