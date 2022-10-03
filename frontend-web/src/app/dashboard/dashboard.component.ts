@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loadLastOrders(5);
+    this.loadLastOrders(8);
     this.loadLastRegisteredCustomers(5);
   }
 

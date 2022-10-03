@@ -19,7 +19,7 @@ Você deve ter o **Docker** e o **Docker-Compose** instalados;
     1. *docker network create wktech-network*;
     2. *docker-compose up --build -d*;
 4. Instale as dependências de terceiros via **Composer** (*composer install*) - este passo pode ser executado direto do *container* de aplicação, caso você não tenha o **Composer** instalado na sua máquina;
-5. Acesse a aplicação em seu navegador pela url: ***http://localhost:8080***;
+5. Acesse a aplicação em seu navegador pela url: ***http://localhost:8080/index.html***;
 
 ## Detalhes da implementação
 1. Validações dos dados de entrada (forms) realizadas tanto do lado do cliente (Frontend), quanto do servidor (Backend). Esta última faz uso das *Constraints* e *Violations* do Symfony;
