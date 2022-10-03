@@ -1,0 +1,7 @@
+<h2 class="mat-dialog-title">Ooops! </h2>
+<div class="mat-dialog-content">
+    <div [innerHTML]="data.message | nl2pbr | keepHtml"></div>
+</div>
+<div class="mat-dialog-actions">
+    <button mat-raised-button mat-dialog-close class="btn btn-light" mat-dialog-close color="accent">Ok</button>
+</div>

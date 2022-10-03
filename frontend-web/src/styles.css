@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+
+.table td {
+    vertical-align: middle;
+}
+
+a[role="button"] {
+    cursor: pointer;
+}
+
+.form-input-validation-error {
+    font-size: 12px;
+    list-style: none;
+    color: #e96154;
+    margin-top: 5px;
+}
+
+h2.mat-dialog-title {
+    color: #fff;
+}
+
+.paginator {
+    width: 100%;
+    margin: 50px 0;
+}
+
+.paginator p {
+    text-align: center;
+}
+
+.paginator .navigation {
+    width: 20%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.paginator .navigation .page-item {
+    display: inline-flex;
+}
+
+.paginator a.btn.page-link {
+    margin: 0 5px;
+}

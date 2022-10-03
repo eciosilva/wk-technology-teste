@@ -1,0 +1,73 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Clientes</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="dropdown float-right text-light">
+                    <a class="btn btn-primary" routerLink="/cliente/novo"><i class="fa fa-plus"></i> Cadastrar</a>
+                </div>
+
+                <h4 class="header-title">Clientes </h4>
+                <p class="sub-header">
+                    Lista de todos os clientes cadastrados no sistema.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 mt-3 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>CPF</th>
+                            <th>Data de Nasc.</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="customers.length == 0"><td colspan="6" class="text-center">Nenhum cliente cadastrado.</td></tr>
+                        <tr *ngFor="let customer of customers">
+                            <td>{{ customer.id }}</td>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.email }}</td>
+                            <td>{{ customer.cpf | mask: "000.000.000-00" }}</td>
+                            <td>{{ customer.birthdate | date: "mediumDate" }}</td>
+                            <td class="actions">
+                                <a class="btn btn-light mr-2" routerLink="/cliente/{{ customer.id }}"><i class="fa fa-lg fa-edit"></i></a>
+                                <a class="btn btn-danger text-light" (click)="delete(customer.id)" role="button"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINATOR -->
+                <div class="paginator" *ngIf="totalPages>0">
+                    <div aria-label="Page navigation example">
+                        <p>Página <strong>{{ page }}</strong> de <strong>{{ totalPages }}</strong></p>
+                        <div class="navigation">
+                            <span class="page-item">
+                                <a class="btn page-link" (click)="paginate(page-1)" [class.disabled]="page === 1">Anterior</a>
+                            </span>
+                            
+                            <span class="page-item">
+                                <a class="btn page-link" (click)="paginate(page+1)" [class.disabled]="page === totalPages">Próxima</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>

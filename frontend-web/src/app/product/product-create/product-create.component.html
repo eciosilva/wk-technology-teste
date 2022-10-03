@@ -1,0 +1,62 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Produtos</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="header-title mb-1">Novo Produto</h4>
+                <p class="sub-header mb-4">
+                    Os campos marcados com (*) são obrigatórios.
+                </p>
+
+                <form id="form-product-new" class="form-horizontal" [formGroup]="productForm">
+                <div class="row">
+                
+                    <div class="col-xl-6">
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-product-new-name">Nome *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-product-new-name" formControlName="name" 
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': productForm.controls['name'].errors && formSubmited}"
+                                    required minlength="3" />
+                                <span *ngIf="productForm.controls['name'].errors && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-product-new-price">Preço *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-product-new-price" formControlName="price" 
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': productForm.controls['price'].errors && formSubmited}"
+                                    mask="separator.2" thousandSeparator="." required />
+                                <span *ngIf="productForm.controls['price'].errors && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12">
+                        <a class="btn btn-secondary text-light mr-2" routerLink="/productes"><i class="fa fa-times-circle"></i> Cancelar</a>
+                        <a class="btn btn-primary text-light cursor-pointer" (click)="save()" role="button">Salvar</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>

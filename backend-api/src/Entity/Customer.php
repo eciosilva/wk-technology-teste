@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use JsonSerializable;
 
 /**
@@ -14,6 +16,7 @@ use JsonSerializable;
  *      @ORM\UniqueConstraint(name="idx_customer_email", columns={"email"}),
  *      @ORM\UniqueConstraint(name="idx_customer_cpf", columns={"cpf"}),
  * })
+ * @UniqueEntity("email", message="customer.email.already_been_used")
  */
 class Customer implements JsonSerializable
 {
@@ -26,33 +29,48 @@ class Customer implements JsonSerializable
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="_default.not_null")
+     * @Assert\Length(
+     *      min = 4,
+     *      normalizer = "trim"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = 11,
+     *      max = 11,
+     *      normalizer = "trim"
+     * )
      */
     private $cpf;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="_default.not_null")
+     * @Assert\Email(
+     *      mode = "html5",
+     *      normalizer = "trim"
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private \DateTime $birthdate;
+    private ?\DateTime $birthdate;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="customer")
-     * @var Order[]
+     * @var ArrayCollection|array
      */
     private $orders;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Address", mappedBy="customer")
-     * @var Address[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Address", mappedBy="customer", cascade={"persist", "remove"})
+     * @var ArrayCollection|array
      */
     private $adresses;
 
@@ -67,9 +85,10 @@ class Customer implements JsonSerializable
         return [
             'id'    => $this->id,
             'name'  => $this->name,
-            'cpf'  => $this->cpf,
-            'email'   => $this->email,
-            'birthdate'   => $this->birthdate
+            'cpf'   => $this->cpf,
+            'email' => $this->email,
+            'birthdate' => $this->birthdate,
+            'adresses'  => $this->adresses
         ];
     }
 
@@ -146,7 +165,7 @@ class Customer implements JsonSerializable
     /**
      * Set the value of birthdate
      */
-    public function setBirthdate(\DateTime $birthdate): self
+    public function setBirthdate(?\DateTime $birthdate): self
     {
         $this->birthdate = $birthdate;
 
@@ -156,7 +175,7 @@ class Customer implements JsonSerializable
     /**
      * Get the value of orders
      */
-    public function getOrders(): array
+    public function getOrders(): ArrayCollection
     {
         return $this->orders;
     }
@@ -164,7 +183,7 @@ class Customer implements JsonSerializable
     /**
      * Set the value of orders
      */
-    public function setOrders(array $orders): self
+    public function setOrders(ArrayCollection|array $orders): self
     {
         $this->orders = $orders;
 
@@ -174,7 +193,7 @@ class Customer implements JsonSerializable
     /**
      * Get the value of adresses
      */
-    public function getAdresses(): array
+    public function getAdresses(): ArrayCollection
     {
         return $this->adresses;
     }
@@ -182,9 +201,53 @@ class Customer implements JsonSerializable
     /**
      * Set the value of adresses
      */
-    public function setAdresses(array $adresses): self
+    public function setAdresses(ArrayCollection|array $adresses): self
     {
         $this->adresses = $adresses;
+
+        return $this;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            /*if ($order->getCustomer() === $this) {
+                $order->setCustomer(null);
+            }*/
+        }
+
+        return $this;
+    }
+
+    public function addAdress(Address $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Address $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            /*if ($adress->getCustomer() === $this) {
+                $adress->setCustomer(null);
+            }*/
+        }
 
         return $this;
     }

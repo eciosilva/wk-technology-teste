@@ -1,0 +1,60 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Pedidos</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body" *ngIf="order">
+
+                <h4 class="header-title">Pedido #{{ order.id }} </h4>
+                <p class="sub-header">
+                    Detalhes da ordem de compra.
+                </p>
+
+                <p>
+                    <strong>Cliente:</strong> {{ order.customer.name}}
+                    <br /><strong>Data da Compra:</strong> {{ order.createdAt | date:"medium" }}
+                    <br /><strong>Valor total:</strong> {{ order.totalValue | currency:"R$ " }}
+                </p>
+
+                <div class="table-responsive" *ngIf="products">
+                    <table class="table mb-0 mt-3 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th width="10%">#</th>
+                            <th width="30%">Produto</th>
+                            <th width="15%">Preço unitário</th>
+                            <th width="15%">Quantidade</th>
+                            <th width="15%">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="products.length == 0"><td colspan="5" class="text-center">Esta Ordem de compra está vazia.</td></tr>
+                        <tr *ngFor="let orderProduct of products">
+                            <td>{{ orderProduct.product.id }}</td>
+                            <td>{{ orderProduct.product.name }}</td>
+                            <td>{{ orderProduct.unitValue | currency:'R$' }}</td>
+                            <td>{{ orderProduct.amount }}</td>
+                            <td>{{ orderProduct.totalValue | currency:'R$' }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>
+
+<div class="row mt-4">
+    <div class="col-sm-12">
+        <a class="btn btn-secondary text-light mr-2" routerLink="/pedidos" role="button"><i class="fa fa-chevron-circle-left"></i> Voltar</a>
+    </div>
+</div>

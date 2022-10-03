@@ -1,0 +1,70 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Pedidos</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="dropdown float-right text-light">
+                    <a class="btn btn-primary" routerLink="/pedido/novo"><i class="fa fa-plus"></i> Cadastrar</a>
+                </div>
+
+                <h4 class="header-title">Pedidos </h4>
+                <p class="sub-header">
+                    Lista de todas as ordens de compra cadastradas no sistema.
+                </p>
+
+                <div class="table-responsive">
+                    <table class="table mb-0 mt-3 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th width="10%">#</th>
+                            <th width="50%">Cliente</th>
+                            <th width="20%">Data do pedido</th>
+                            <th width="20%">Valor total</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="orders.length == 0"><td colspan="6" class="text-center">Nenhuma ordem de compra cadastrada.</td></tr>
+                        <tr *ngFor="let order of orders">
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.customer.name }}</td>
+                            <td>{{ order.createdAt | date: "short" }}</td>
+                            <td>{{ order.totalValue | currency:'R$' }}</td>
+                            <td class="actions">
+                                <a class="btn btn-light mr-2" routerLink="/pedido/{{ order.id }}"><i class="fa fa-lg fa-search"></i></a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PAGINATOR -->
+                <div class="paginator" *ngIf="totalPages>0">
+                    <div aria-label="Page navigation example">
+                        <p>Página <strong>{{ page }}</strong> de <strong>{{ totalPages }}</strong></p>
+                        <div class="navigation">
+                            <span class="page-item">
+                                <a class="btn page-link" (click)="paginate(page-1)" [class.disabled]="page === 1">Anterior</a>
+                            </span>
+                            
+                            <span class="page-item">
+                                <a class="btn page-link" (click)="paginate(page+1)" [class.disabled]="page === totalPages">Próxima</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>

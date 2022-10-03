@@ -1,0 +1,72 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Dashboard</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Novos clientes</h4>
+
+                <div class="inbox-widget slimscroll" style="min-height: 370px;">
+                    <p *ngIf="customers.length == 0" class="text-center">Nenhum cliente cadastrado.</p>
+                    <a routerLink="/cliente/{{ customer.id }}" *ngFor="let customer of customers">
+                        <div class="inbox-item">
+                            <div class="inbox-item-img">
+                                <img src="assets/images/users/avatar-no-img.png" class="rounded-circle" alt="{{ customer.name }}" />
+                            </div>
+                            <h5 class="inbox-item-author font-14 m-0">{{ customer.name }}</h5>
+                            <p class="inbox-item-text text-truncate">{{ customer.email }}</p>
+                            <p class="inbox-item-date">13:40 PM</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col -->
+
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Últimos pedidos</h4>
+
+                <div class="table-responsive" style="min-height: 370px;">
+                    <table class="table mb-0 table-nowrap">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Cidade</th>
+                            <th>Valor</th>
+                            <th>Data Pedido</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngIf="orders.length == 0"><td colspan="6" class="text-center">Nenhum pedido realizado.</td></tr>
+                        <tr *ngFor="let order of orders">
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.customer.name }}</td>
+                            <td>
+                                {{ order.customer.adresses[0] ? order.customer.adresses[0].city.name : "" }} /
+                                {{ order.customer.adresses[0] ? order.customer.adresses[0].city.state.uf : "" }}
+                            </td>
+                            <td>{{ order.totalValue | currency:"R$ " }}</td>
+                            <td>{{ order.createdAt | date:"medium"}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col -->
+
+</div>
+<!-- end row -->

@@ -1,0 +1,177 @@
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Clientes</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="header-title mb-1">Novo Cliente</h4>
+                <p class="sub-header mb-4">
+                    Os campos marcados com (*) são obrigatórios.
+                </p>
+
+                <form id="form-customer-edit" class="form-horizontal" [formGroup]="customerForm">
+                <div class="row">
+                
+                    <div class="col-xl-6">
+                        <h5 class="font-14 mb-1">Dados Pessoais</h5>
+                        <p class="sub-header">
+                            Preencha o formulário abaixo com os dados pessoais do cliente.
+                        </p>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-name">Nome *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-name" formControlName="name" 
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': customerForm.controls['name'].errors && formSubmited}"
+                                    required minlength="3" />
+                                <span *ngIf="customerForm.controls['name'].errors && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-email">Email *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-email" formControlName="email" 
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': customerForm.controls['email'].errors && formSubmited}"
+                                    required />
+                                <span *ngIf="customerForm.controls['email'].errors && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-cpf">CPF *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-cpf" formControlName="cpf"
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': customerForm.controls['cpf'].errors && formSubmited}"
+                                    mask="000.000.000-00" required />
+                                <span *ngIf="customerForm.controls['cpf'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-cpf">Data de Nasc.</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-cpf" formControlName="birthdate"
+                                    class="form-control" 
+                                    [ngClass]="{'parsley-error': customerForm.controls['birthdate'].errors && formSubmited}"
+                                    mask="00/00/0000" />
+                                <span *ngIf="customerForm.controls['birthdate'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6" [formGroup]="addressForm">
+                        <h5 class="font-14 mb-1">Endereço</h5>
+                        <p class="sub-header">
+                            Preencha o formulário abaixo com os dados de enedereço do cliente.
+                        </p>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-addr-street">Endereço *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-addr-street" formControlName="street"
+                                    [ngClass]="{'parsley-error': addressForm.controls['street'].errors && formSubmited}"
+                                    class="form-control" 
+                                    required />
+                                <span *ngIf="addressForm.controls['street'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-addr-complement">Complemento *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-addr-complement" formControlName="complement"
+                                    [ngClass]="{'parsley-error': addressForm.controls['complement'].errors && formSubmited}"
+                                    class="form-control" 
+                                    required />
+                                <span *ngIf="addressForm.controls['complement'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-addr-district">Bairro *</label>
+                            <div class="col-md-6">
+                                <input type="text" id="form-customer-edit-addr-district" formControlName="district"
+                                    [ngClass]="{'parsley-error': addressForm.controls['district'].errors && formSubmited}"
+                                    class="form-control" 
+                                    required />
+                                <span *ngIf="addressForm.controls['district'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-addr-number">Número / CEP *</label>
+                            <div class="col-md-2">
+                                <input type="text" id="form-customer-edit-addr-number" formControlName="number" placeholder="Número"
+                                    [ngClass]="{'parsley-error': addressForm.controls['number'].errors && formSubmited}"
+                                    class="form-control" 
+                                    required />
+                                <span *ngIf="addressForm.controls['number'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <input type="text" id="form-customer-edit-addr-zip" formControlName="zip" placeholder="CEP"
+                                    [ngClass]="{'parsley-error': addressForm.controls['zip'].errors && formSubmited}"
+                                    class="form-control" 
+                                    mask="00000-000" required />
+                                <span *ngIf="addressForm.controls['zip'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="form-customer-edit-addr-uf">UF / Cidade *</label>
+                            <div class="col-md-2">
+                                <select class="form-control" id="form-customer-edit-addr-zip" #customerState
+                                    [ngClass]="{'parsley-error': addressForm.controls['city'].errors && formSubmited}"
+                                    (change)="loadCities(customerState.value)"
+                                    [(ngModel)]="ufId"
+                                    [ngModelOptions]="{standalone: true}"
+                                    required
+                                >
+                                    <option value="0" selected> Selecione a UF </option>
+                                    <option [value]="uf.id" *ngFor="let uf of ufs">{{ uf.uf }} - {{ uf.name }}</option>
+                                </select>
+                                <span *ngIf="addressForm.controls['city'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control" id="form-customer-edit-addr-city" formControlName="city"
+                                    [ngClass]="{'parsley-error': addressForm.controls['city'].errors && formSubmited}"
+                                    required
+                                >
+                                    <option value="0" selected> Selecione a UF </option>
+                                    <option [value]="city.id" *ngFor="let city of cities">{{ city.name }}</option>
+                                </select>
+                                <span *ngIf="addressForm.controls['city'].errors  && formSubmited" 
+                                    class="form-input-validation-error">Dados inválidos</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12">
+                        <input type="hidden" id="form-customer-edit-id" formControlName="id" class="form-control" required />
+                        <a class="btn btn-secondary text-light mr-2" routerLink="/clientes"><i class="fa fa-times-circle"></i> Cancelar</a>
+                        <a class="btn btn-primary text-light cursor-pointer" (click)="save()" role="button">Salvar</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>

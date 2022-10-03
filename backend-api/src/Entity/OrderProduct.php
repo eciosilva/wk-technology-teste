@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
@@ -17,14 +18,12 @@ class OrderProduct implements JsonSerializable
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(name="order_id", type="integer")
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderProducts")
      */
     private $order;
 
     /**
      * @ORM\Id()
-     * @ORM\Column(name="product_id", type="integer")
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderProducts")
      */
     private $product;
@@ -49,6 +48,9 @@ class OrderProduct implements JsonSerializable
         return [
             'order' => $this->order,
             'product' => $this->product,
+            'amount' => $this->amount,
+            'unitValue' => $this->unitValue,
+            'totalValue' => $this->totalValue
         ];
     }
 
@@ -105,4 +107,27 @@ class OrderProduct implements JsonSerializable
 
         return $this;
     }
+
+    public function getOrder(): Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order): self
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): self
+    {
+        $this->product = $product;
+        return $this;
+    }
+    
 }

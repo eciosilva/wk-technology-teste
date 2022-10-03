@@ -8,7 +8,7 @@ use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
- * @ORM\Table(indexes={
+ * @ORM\Table(name="`order`", indexes={
  *  @ORM\Index(name="idx_order_customer", columns={"customer_id"})
  * })
  */
@@ -39,7 +39,8 @@ class Order implements JsonSerializable
     private $totalValue;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderProduct", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderProduct", mappedBy="order", cascade={"persist", "remove"})
+     * @var ArrayCollection|array
      */
     private $orderProducts;
 
@@ -53,8 +54,8 @@ class Order implements JsonSerializable
         return [
             'id'    => $this->id,
             'customer'  => $this->customer,
-            'created_at'  => $this->createdAt,
-            'total_value'   => $this->totalValue
+            'createdAt'  => $this->createdAt,
+            'totalValue'   => $this->totalValue
         ];
     }
 
@@ -123,7 +124,7 @@ class Order implements JsonSerializable
     /**
      * Get the value of orderProducts
      */
-    public function getOrderProducts()
+    public function getOrderProducts(): ArrayCollection|array
     {
         return $this->orderProducts;
     }
@@ -134,6 +135,28 @@ class Order implements JsonSerializable
     public function setOrderProducts($orderProducts): self
     {
         $this->orderProducts = $orderProducts;
+
+        return $this;
+    }
+
+    public function addOrderProduct(OrderProduct $orderProduct): self
+    {
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderProduct(OrderProduct $orderProduct): self
+    {
+        if ($this->orderProducts->removeElement($orderProduct)) {
+            // set the owning side to null (unless already changed)
+            /*if ($orderProduct->getOrder() === $this) {
+                $orderProduct->setOrder(null);
+            }*/
+        }
 
         return $this;
     }

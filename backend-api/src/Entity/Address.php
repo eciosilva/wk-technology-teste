@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use JsonSerializable;
 
 /**
@@ -24,26 +24,36 @@ class Address implements JsonSerializable
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="_default.not_null")
      */
     private $street;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\NotBlank(message="_default.not_null")
      */
     private $number;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="_default.not_null")
      */
     private $district;
 
     /**
      * @ORM\Column(type="string", length="20")
+     * @Assert\NotBlank(message="_default.not_null")
+     * @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      normalizer = "trim"
+     * )
      */
     private $zip;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="_default.not_null")
      */
     private $complement;
 
@@ -57,6 +67,7 @@ class Address implements JsonSerializable
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="_default.not_null")
      * @var City
      */
     private $city;
@@ -70,7 +81,6 @@ class Address implements JsonSerializable
             'district' => $this->district,
             'zip' => $this->zip,
             'complement' => $this->complement,
-            'customer' => $this->customer,
             'city' => $this->city
         ];
     }

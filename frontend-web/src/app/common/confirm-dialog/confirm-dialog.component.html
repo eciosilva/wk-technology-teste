@@ -1,0 +1,8 @@
+<h2 class="mat-dialog-title"><i class="fa fa-exclamation"></i> Atenção</h2>
+<div class="mat-dialog-content">
+    <p>{{data.confirmMessage}}</p>
+</div>
+<div class="mat-dialog-actions">
+  <button mat-raised-button (click)="dialogRef.close(true)" class="btn btn-danger">{{ data.confirmLabel ? data.confirmLabel : 'Confirmar' }}</button>
+  &nbsp;<button mat-raised-button mat-dialog-close class="btn btn-light">{{ data.cancelLabel ? data.cancelLabel : 'Cancelar' }}</button>
+</div>

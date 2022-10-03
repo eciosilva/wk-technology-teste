@@ -1,0 +1,7 @@
+_default:
+  not_null: "Campo obrigatório"
+  invalid: "Valor inválido"
+
+customer:
+  email:
+    already_been_used: "Este e-mail já está sendo utilizado."

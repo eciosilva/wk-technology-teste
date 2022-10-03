@@ -20,3 +20,10 @@ Você deve ter o **Docker** e o **Docker-Compose** instalados;
     2. *docker-compose up --build -d*;
 4. Instale as dependências de terceiros via **Composer** (*composer install*) - este passo pode ser executado direto do *container* de aplicação, caso você não tenha o **Composer** instalado na sua máquina;
 5. Acesse a aplicação em seu navegador pela url: ***http://localhost:8080***;
+
+## Detalhes da implementação
+1. Validações dos dados de entrada (forms) realizadas tanto do lado do cliente (Frontend), quanto do servidor (Backend). Esta última faz uso das *Constraints* e *Violations* do Symfony;
+2. O ambiente de desenvolvimento do Frontend faz uso de um proxy para evitar problema de **CORS**, isto é, requisições enviadas da aplicação Angular na porta 4200 para o servidor Docker/NginX/PHP/Symfony, na 8080, são roteadas. Para habilitar o seu uso, basta iniciar o ambiente Angular com o comando "*npm start*", que já está configurado para fazer uso do Proxy, ao invés do "*ng serve*";
+3. As mensagens enviadas pela API fazem uso do sistema de tradução do Symfony.
+4. O desenvolvimento dos códigos de ambas as aplicações foi feito seguindo os princípios e conceitos de *SOLID* e *Clean Code*;
+5. A API implementa o padrão *RESTFul* e faz o uso correto dos respectivos verbos HTTP e do padrão de nomenclatura dos *endpoints* para cada *resource*.
